@@ -1,13 +1,14 @@
-# kontak-ts
+# kontak.ts
 > Program kontakt using javascript
 
 ## Introduction
 
-This package is based on the [Kontakt Lua API](https://native-instruments.com/ni-tech-manuals/kontakt-api-reference-manual/en/welcome-to-the-kontakt-lua-api-reference-manual) 
+kontak-ts is a npm package written in typescript which enables use of the Kontakt Lua API from node.
+
+The package is based on the [Kontakt Lua API](https://native-instruments.com/ni-tech-manuals/kontakt-api-reference-manual/en/welcome-to-the-kontakt-lua-api-reference-manual) 
 A bridging lua script is run within kontakt, which allows commands to be issued from a node environment. 
 
 This package enables a more pleasant developer experience with auto-completion and type safety.
-
 
 The api is scraped from the online docs, and includes functions and constants with type information and descriptions.
 
@@ -57,4 +58,4 @@ If using a nonstandard install location, the environment variable KONTAKT_PATH i
 
 - The communication between kontakt and node happens via disk, open for ideas and PRs changing this
 
-- Some functions or constants may be broken or missing, if you find something in particular feel free to open an issue 
+- Certain functions or constants may be broken or missing, if you find something in particular feel free to open an issue 

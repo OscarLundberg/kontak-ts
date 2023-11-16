@@ -1,7 +1,7 @@
 {
   "name": "kontak.ts",
   "author": "Oscar Lundberg",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "type": "module",
   "main": "dist/lib.js",
@@ -15,5 +15,9 @@
   },
   "files": [
     "dist/**/*"
-  ]
+  ],
+  "repository": "github:OscarLundberg/kontak.ts",
+  "bugs": {
+    "url": "https://github.com/OscarLundberg/kontak.ts/issues"
+  }
 }
