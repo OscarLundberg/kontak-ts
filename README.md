@@ -21,15 +21,23 @@ All of the exposed functions are async. Since the communication between kontakt 
 
 The constants are preloaded before execution and can be used sychronously as normal, as well as any other node apis.
 
+### Example
 ```ts
 import { Kontakt } from "kontak.ts";
+import path from "path";
 
 Kontakt.run(async (functions, constants) => {
-  const instrumentIdx = await functions.addInstrument();
+  console.log(constants.VERSION)
 
-  await functions.setInstrumentVolume(instrumentIdx, 11);
+  const instr = await functions.addInstrument();
+  
+  await functions.setInstrumentVolume(instr, 11);
+  
+  const grp = await functions.addGroup(instr)
+  
+  await functions.addZone(instr, grp, path.resolve("./my-sample.wav"));
 
-  await saveInstrument(instrumentIdx, "myNewKontaktInstrument", {});
+  await functions.saveInstrument(instr, path.resolve('./my-cool-instrument.nki'))
 });
 
 ```

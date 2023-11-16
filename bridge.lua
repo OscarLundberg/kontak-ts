@@ -28,7 +28,8 @@ while true do
     goto continue
   end
 
-  local args = table.unpack(instruction["args"])
+ 
+  local args = instruction["args"]
   local output;
   if string.find(instruction["command"], "PRELOAD_CONSTANTS") then
     output = {}
@@ -36,7 +37,7 @@ while true do
       output[v] = Kontakt[v];
     end
   else
-    output = Kontakt[instruction["command"]](args)
+    output = Kontakt[instruction["command"]](table.unpack(args))
   end
   local resultPath = instruction["output_file"]
   file = io.open(resultPath, "w")

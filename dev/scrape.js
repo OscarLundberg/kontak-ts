@@ -59,7 +59,7 @@ async function writeFunctionsToFile() {
       /**
        * @summary ${e.summary}
        */ 
-      ${e.name}(${e.args.map(a => `${a.name}${a.optional ? "?" : ""}:${a.type}`).join(", ")}){ return this.kontakt.execCommandRawAsync("${e.key}", "${e.returnValue}", {${e.args.map(e => e.name).join(", ")}}) }`
+      ${e.name}(${e.args.map(a => `${a.name}${a.optional ? "?" : ""}:${a.type}`).join(", ")}){ return this.kontakt.execCommandRawAsync("${e.key}", "${e.returnValue}", [${e.args.map(e => e.name).join(", ")}]) }`
   }).join("\n")
 
   const types = Object.keys(uniqueReturnTypes).map(e => `"${e}"`).join(" | ")
@@ -67,7 +67,7 @@ async function writeFunctionsToFile() {
   const cls = `
       export type Output = ${types};
       export class InstructionSet<T extends {[key in Output]: any}> { 
-      constructor(private kontakt: { execCommandRawAsync<K extends Output>(a1:string, a2:K, args:any):Promise<ReturnType<T[K]>>}){}
+      constructor(private kontakt: { execCommandRawAsync<K extends Output>(a1:string, a2:K, args:any[]):Promise<ReturnType<T[K]>>}){}
       ${instructionSet}
     }`
 
@@ -106,10 +106,6 @@ function scrapeKontaktFunction() {
 
   }
 
-}
-
-function scrapeVoidFunction() {
-  
 }
 
 function writeConstantsToFile() {

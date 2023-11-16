@@ -190,7 +190,7 @@ export class Kontakt {
   /**
   * @private
   */
-  private static async sendCommand(command: string, args: any[] = [], output_file?: string) {
+  private static async sendCommand(command: string, args: any = [], output_file?: string) {
     await fsp.writeFile(Kontakt.jobFile, JSON.stringify({ command, args, output_file }))
   }
 
@@ -204,7 +204,7 @@ export class Kontakt {
   */
   private static outputTimeout: NodeJS.Timeout;
 
-  static async execCommandRawAsync<T extends keyof typeof outputModes>(command: string, expectedOutput: T, ...args: any[]) {
+  static async execCommandRawAsync<T extends keyof typeof outputModes>(command: string, expectedOutput: T, args: any[] = []) {
     return new Promise<ReturnType<typeof outputModes[T]>>(async (res, rej) => {
       const outputId = randomStr()
       const OUTPUT_FILE = Kontakt.getOutputFilePath(outputId);
@@ -241,6 +241,7 @@ export class Kontakt {
       }
       throw new Error("Could not read output");
     }
+    return result;
   }
 
 }
