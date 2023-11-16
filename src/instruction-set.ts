@@ -46,7 +46,7 @@
       /**
        * @summary Save options can be defined by passing a table with one or more of the following entries:mode: save_modes (default: “patch”)absolute_paths: boolean (default: false)compress_samples: boolean (default: false)samples_sub_dir: stringIndividual entries of this table can be omitted. In that case the default value is used.
        */ 
-      saveMulti(filename:string, options:Record<string, any>){ return this.kontakt.execCommandRawAsync("save_multi", "void", {filename, options}) }
+      saveMulti(filename:string, options:string[]){ return this.kontakt.execCommandRawAsync("save_multi", "void", {filename, options}) }
 
       /**
        * @summary Loads the specified multi. The whole instrument rack is reset beforehand.
@@ -171,7 +171,7 @@
       /**
        * @summary Specified instrument’s options can be set by passing a table with one or more of the following entries:Instrumentkey_switch: integer (default: nil) key_range_from: integer (default: 0)key_range_to: integer (default: 127) velocity_range_from: integer (default: 0)velocity_range_to: integer (default: 127)midi_transpose: integer (default: 0)wallpaper: string (default: nil)Voice Handlingvoice_stealing_mode: voice_stealing_modes (default: “oldest”)voice_stealing_fadeout: integer (default: 10)time_machine_voice_limit: integer (default: 8)time_machine_voice_limit_hq: integer (default: 4)time_machine_use_legacy: boolean (default: false)DFDdfd_buffersize: integer (default: 60)background_loading: boolean (default: true)Controllercc_64_mode: cc64_modes (default: “pedal_and_cc”) use_cc_120_123: boolean (default: true) use_cc_7_10: boolean (default: true)cc_7_range: integer (default: 0)Snapshotsshow_factory_snapshots: boolean (default: true)Infoinfo_icon: integer (default: 28)info: string (default: “(null)”)info_author: string (default: “Kontakt”)info_url: string (default: “(null)”)Individual entries of this table can be omitted. In that case the default value is used.
        */ 
-      setInstrumentOptions(instrumentIdx:number, options:Record<string, any>){ return this.kontakt.execCommandRawAsync("set_instrument_options", "void", {instrumentIdx, options}) }
+      setInstrumentOptions(instrumentIdx:number, options:string[]){ return this.kontakt.execCommandRawAsync("set_instrument_options", "void", {instrumentIdx, options}) }
 
       /**
        * @summary Sets the audio output for the specified instrument. Make sure to check how many outputs are available before setting!
@@ -226,7 +226,7 @@
       /**
        * @summary Sets voice groups of the specified instrument as a table with a maximum of 128 entries, matching the total number of possible voice groups. Nil table entries will set voice group to default values. Voice group parameters are defined in a sub-table:mode: voice_group_modes (default: “oldest”)name: string (default: ’’)voices: integer (default: 1)fade_time: integer (default: 10)prefer_released: boolean (default: true)exclusive_group: integer (default: nil)Individual entries of this table can be omitted. In that case the default value is used.
        */ 
-      setVoiceGroups(instrumentIdx:number, voiceGroups:Record<string, any>){ return this.kontakt.execCommandRawAsync("set_voice_groups", "void", {instrumentIdx, voiceGroups}) }
+      setVoiceGroups(instrumentIdx:number, voiceGroups:string[]){ return this.kontakt.execCommandRawAsync("set_voice_groups", "void", {instrumentIdx, voiceGroups}) }
 
       /**
        * @summary Inserts a new instrument at given or next available instrument index. Returns the index of the new instrument. Pass this index to functions taking instrument_idx as an argument.
@@ -261,7 +261,7 @@
       /**
        * @summary Save options can be defined by passing a table with one or more of the following entries:mode: save_modes (default: “patch”)absolute_paths: boolean (default: false)compress_samples: boolean (default: false)samples_sub_dir: stringIndividual entries of this table can be omitted. In that case the default value is used.
        */ 
-      saveInstrument(instrumentIdx:number, filename:string, options:Record<string, any>){ return this.kontakt.execCommandRawAsync("save_instrument", "void", {instrumentIdx, filename, options}) }
+      saveInstrument(instrumentIdx:number, filename:string, options:string[]){ return this.kontakt.execCommandRawAsync("save_instrument", "void", {instrumentIdx, filename, options}) }
 
       /**
        * @summary Saves the state of the instrument at the specified insturment index as a snapshot at the specified absolute path.
@@ -326,7 +326,7 @@
       /**
        * @summary Start On Keymode: “key”key_min: integer (default: 24)key_max: integer (default: 24)next: group_start_operators (default: “and”)Start On Controllermode: “controller”controller: (default: 1)cc_min: (default: 0)cc_max: (default: 64)next: group_start_operators (default: “and”)Cycle Round Robinmode: “round_robin”position: integer (default: 1)next: group_start_operators (default: “and”)Cycle Randommode: “random”next: group_start_operators (default: “and”)Slice Triggermode: “slice_trigger”zone: integer (default: nil)slice: integer (default: nil)internal: boolean (default: false)next: group_start_operators (default: “and”)Individual entries of this table can be omitted. In that case the default value is used. See also: group_start_conditions
        */ 
-      setGroupStartOptions(instrumentIdx:number, groupIdx:number, options:Record<string, any>){ return this.kontakt.execCommandRawAsync("set_group_start_options", "void", {instrumentIdx, groupIdx, options}) }
+      setGroupStartOptions(instrumentIdx:number, groupIdx:number, options:string[]){ return this.kontakt.execCommandRawAsync("set_group_start_options", "void", {instrumentIdx, groupIdx, options}) }
 
       /**
        * @summary Sets the tuning of the specified group in semitones. Range is -36.0 … 36.0.
@@ -356,12 +356,12 @@
       /**
        * @summary Options table currently has a single entry:replace_zones: boolean (default: false)
        */ 
-      loadGroup(instrumentIdx:number, groupIdx:number, filename:string, options:Record<string, any>){ return this.kontakt.execCommandRawAsync("load_group", "void", {instrumentIdx, groupIdx, filename, options}) }
+      loadGroup(instrumentIdx:number, groupIdx:number, filename:string, options:string[]){ return this.kontakt.execCommandRawAsync("load_group", "void", {instrumentIdx, groupIdx, filename, options}) }
 
       /**
        * @summary Save options can be defined by passing a table with one or more of the following entries:mode: save_modes (default: “patch”)absolute_paths: boolean (default: false)compress_samples: boolean (default: false)samples_sub_dir: stringIndividual entries of this table can be omitted. In that case the default value is used.
        */ 
-      saveGroup(instrumentIdx:number, groupIdx:number, filename:string, options:Record<string, any>){ return this.kontakt.execCommandRawAsync("save_group", "void", {instrumentIdx, groupIdx, filename, options}) }
+      saveGroup(instrumentIdx:number, groupIdx:number, filename:string, options:string[]){ return this.kontakt.execCommandRawAsync("save_group", "void", {instrumentIdx, groupIdx, filename, options}) }
 
       /**
        * @summary Returns the total number of zones in the specified instrument.
@@ -541,7 +541,7 @@
       /**
        * @summary Applies geometry to the specified zone. This consists of a table of the following properties which specify the boundaries of the zone.Geometry:root_key (default: 36, range: 0 … 127)low_key (default: 0, range: 0 ... high_key)high_key (default: 127, range: low_key ...127)low_key_fade (default: 0, range: 0 ... span)high_key_fade (default: 0, range: 0 ... span)low_velocity (default: 1, range: 0 ... high_velocity)high_velocity (default: 127, range: low_velocity ... 127)low_velocity_fade (default: 0, range: 0 ... span)high_velocity_fade (default: 0, range: 0 ... span)span is defined as: high_key / velocity + 1 - low_key / velocity - opposite_fade_value. So if setting low_key_fade, use the value of high_key_fade as opposite_fade_value
        */ 
-      setZoneGeometry(instrumentIdx:number, zoneIdx:number, geometry:Record<string, any>){ return this.kontakt.execCommandRawAsync("set_zone_geometry", "void", {instrumentIdx, zoneIdx, geometry}) }
+      setZoneGeometry(instrumentIdx:number, zoneIdx:number, geometry:string[]){ return this.kontakt.execCommandRawAsync("set_zone_geometry", "void", {instrumentIdx, zoneIdx, geometry}) }
 
       /**
        * @summary Sets the grid of the specified zone. See zone_grid_modes.

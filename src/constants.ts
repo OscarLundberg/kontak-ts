@@ -20,7 +20,7 @@ export class Constants {
 	* - `pedal_and_cc`
 	* - `pedal_exclusive`
      **/
-    get CC64_MODES(){ return this.kontakt.preloadedConstants["cc64_modes"] as Record<string, any> }
+    get CC64_MODES(){ return this.kontakt.preloadedConstants["cc64_modes"] as string[] }
   
 
     /**
@@ -30,7 +30,7 @@ export class Constants {
 	* - `reset_markers`
 	* - `update_sample_pool`
      **/
-    get INSTRUMENT_PURGE_MODES(){ return this.kontakt.preloadedConstants["instrument_purge_modes"] as Record<string, any> }
+    get INSTRUMENT_PURGE_MODES(){ return this.kontakt.preloadedConstants["instrument_purge_modes"] as string[] }
   
 
     /**
@@ -67,7 +67,7 @@ export class Constants {
 	* - `patch`
 	* - `samples`
      **/
-    get SAVE_MODES(){ return this.kontakt.preloadedConstants["save_modes"] as Record<string, any> }
+    get SAVE_MODES(){ return this.kontakt.preloadedConstants["save_modes"] as string[] }
   
 
     /**
@@ -78,7 +78,7 @@ export class Constants {
 	* - `newest`
 	* - `oldest`
      **/
-    get VOICE_STEALING_MODES(){ return this.kontakt.preloadedConstants["voice_stealing_modes"] as Record<string, any> }
+    get VOICE_STEALING_MODES(){ return this.kontakt.preloadedConstants["voice_stealing_modes"] as string[] }
   
 
     /**
@@ -94,7 +94,7 @@ export class Constants {
 	* - `tone_machine`
 	* - `wavetable`
      **/
-    get GROUP_PLAYBACK_MODES(){ return this.kontakt.preloadedConstants["group_playback_modes"] as Record<string, any> }
+    get GROUP_PLAYBACK_MODES(){ return this.kontakt.preloadedConstants["group_playback_modes"] as string[] }
   
 
     /**
@@ -105,7 +105,7 @@ export class Constants {
 	* - `round_robin`
 	* - `slice_trigger`
      **/
-    get GROUP_START_CONDITIONS(){ return this.kontakt.preloadedConstants["group_start_conditions"] as Record<string, any> }
+    get GROUP_START_CONDITIONS(){ return this.kontakt.preloadedConstants["group_start_conditions"] as string[] }
   
 
     /**
@@ -114,7 +114,7 @@ export class Constants {
 	* - `and_not`
 	* - `or`
      **/
-    get GROUP_START_OPERATORS(){ return this.kontakt.preloadedConstants["group_start_operators"] as Record<string, any> }
+    get GROUP_START_OPERATORS(){ return this.kontakt.preloadedConstants["group_start_operators"] as string[] }
   
 
     /**
@@ -139,7 +139,7 @@ export class Constants {
 	* - `newest`
 	* - `oldest`
      **/
-    get VOICE_GROUP_MODES(){ return this.kontakt.preloadedConstants["voice_group_modes"] as Record<string, any> }
+    get VOICE_GROUP_MODES(){ return this.kontakt.preloadedConstants["voice_group_modes"] as string[] }
   
 
     /**
@@ -164,7 +164,7 @@ export class Constants {
 	* - `until_release`
 	* - `until_release_alt`
      **/
-    get SAMPLE_LOOP_MODES(){ return this.kontakt.preloadedConstants["sample_loop_modes"] as Record<string, any> }
+    get SAMPLE_LOOP_MODES(){ return this.kontakt.preloadedConstants["sample_loop_modes"] as string[] }
   
 
     /**
@@ -173,7 +173,7 @@ export class Constants {
 	* - `fixed`
 	* - `none`
      **/
-    get ZONE_GRID_MODES(){ return this.kontakt.preloadedConstants["zone_grid_modes"] as Record<string, any> }
+    get ZONE_GRID_MODES(){ return this.kontakt.preloadedConstants["zone_grid_modes"] as string[] }
   
 
     /**

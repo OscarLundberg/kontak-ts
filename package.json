@@ -14,7 +14,8 @@
     "cheerio": "1.0.0-rc.12"
   },
   "files": [
-    "dist/**/*"
+    "dist/**/*",
+    "*.lua"
   ],
   "repository": "github:OscarLundberg/kontak.ts",
   "bugs": {

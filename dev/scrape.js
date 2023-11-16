@@ -38,7 +38,7 @@ function replaceTypes(str) {
     .replace(/integer/g, "number")
     .replace(/bool/g, "boolean")
     .replace(/float/g, "number")
-    .replace(/table/g, "Record<string, any>")
+    .replace(/table/g, "string[]")
     .replace(/iterator/g, "any[]")
     .replace("?", "")
 }

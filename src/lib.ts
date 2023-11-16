@@ -3,12 +3,9 @@ import fsp from "fs/promises";
 import path from "path";
 import { spawn, type ChildProcess } from "child_process";
 import os from "os";
-import { fileURLToPath } from 'url';
-import { InstructionSet, Output } from "./instruction-set.js";
+import { fileURLToPath, URL } from 'url';
+import { InstructionSet } from "./instruction-set.js";
 import { Constants } from "./constants.js";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 const outputModes = {
   "table": (contents: string) => JSON.parse(contents) as Record<string, any>,
@@ -49,7 +46,21 @@ export class Kontakt {
    */
   public static keepAlive = false;
 
-  static preloadedConstants: Record<string, any> = {};
+  public static preloadedConstants: Record<string, any> = {};
+
+
+  /**
+   * @private
+   */
+  private static maxReadOutputRetries = 5
+
+  /**
+   * @private
+   */
+  private static retryDelay = 3000
+
+
+
   private static constants = new Constants(this);
   /**
    * @private
@@ -105,6 +116,9 @@ export class Kontakt {
   private static spawnKontaktBridge() {
 
     const stdio = Kontakt.enableDebugOutput ? "inherit" : "ignore"
+    if (Kontakt.enableDebugOutput) {
+      console.log(`Executing ${Kontakt.jobParams.KONTAKT_EXE} ${Kontakt.jobParams.LUA_BRIDGE}`)
+    }
     const child = spawn(Kontakt.jobParams.KONTAKT_EXE, [Kontakt.jobParams.LUA_BRIDGE], { detached: Kontakt.keepAlive, env: { ...process.env }, stdio: [stdio, stdio, stdio] })
     if (Kontakt.keepAlive) {
       child.unref();
@@ -119,8 +133,8 @@ export class Kontakt {
   private static init() {
     Kontakt.jobParams = {
       JOB_ID: randomStr(),
-      TMP_DIR: path.resolve(__dirname, "./tmp"),
-      LUA_BRIDGE: path.resolve(__dirname, "./../bridge.lua"),
+      LUA_BRIDGE: fileURLToPath(new URL('../bridge.lua', import.meta.url)),
+      TMP_DIR: fileURLToPath(new URL('../tmp', import.meta.url)),
       KONTAKT_EXE: this.getKontaktExecutable()
     }
 
@@ -151,6 +165,7 @@ export class Kontakt {
 
   static async run(cb: (commands: InstructionSet<typeof outputModes>, constants: Omit<Constants, "list">) => Promise<void>) {
     Kontakt.init();
+    await this.preloadConstants();
     try {
       await cb(
         new InstructionSet<typeof outputModes>(this),
@@ -181,7 +196,7 @@ export class Kontakt {
 
   static async preloadConstants() {
     const list = this.constants.list();
-
+    this.preloadedConstants = await this.execCommandRawAsync("PRELOAD_CONSTANTS", "table", list)
   }
 
   /**
@@ -194,19 +209,38 @@ export class Kontakt {
       const outputId = randomStr()
       const OUTPUT_FILE = Kontakt.getOutputFilePath(outputId);
       await this.createOutputFile(OUTPUT_FILE);
-
       Kontakt.outputTimeout = setTimeout(rej, 45000);
 
-      const watcher = fs.watch(OUTPUT_FILE, async () => {
+      const watcher = fs.watch(OUTPUT_FILE, async (a) => {
         clearTimeout(Kontakt.outputTimeout)
         const str = await fsp.readFile(OUTPUT_FILE, "utf-8")
-        const transformFn = outputModes[expectedOutput];
         watcher.close();
-        res(transformFn(str) as ReturnType<typeof outputModes[T]>);
+        res(this.readResult(OUTPUT_FILE, expectedOutput) as ReturnType<typeof outputModes[T]>);
       })
 
       await Kontakt.sendCommand(command, args, OUTPUT_FILE)
     })
+  }
+
+  static async readResult(OUTPUT_FILE: string, expectedOutput: keyof typeof outputModes, attempt = 1) {
+    const transformFn = outputModes[expectedOutput];
+    let result;
+    const str = await fsp.readFile(OUTPUT_FILE, "utf-8")
+    try {
+      result = transformFn(str);
+    } catch (err) {
+      if (Kontakt.enableDebugOutput) {
+        console.warn(`Could not read output.. retrying ${attempt}/${this.maxReadOutputRetries}`)
+      }
+      if (attempt < this.maxReadOutputRetries) {
+        return new Promise(res => {
+          setTimeout(() => {
+            res(this.readResult(OUTPUT_FILE, expectedOutput, attempt + 1));
+          }, this.retryDelay)
+        });
+      }
+      throw new Error("Could not read output");
+    }
   }
 
 }
