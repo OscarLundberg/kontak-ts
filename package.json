@@ -1,0 +1,19 @@
+{
+  "name": "kontak.ts",
+  "author": "Oscar Lundberg",
+  "version": "1.0.0",
+  "license": "MIT",
+  "type": "module",
+  "main": "dist/lib.js",
+  "types": "dist/lib.d.ts",
+  "scripts": {
+    "scrape": "node dev/scrape.js",
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "cheerio": "1.0.0-rc.12"
+  },
+  "files": [
+    "dist/**/*"
+  ]
+}
