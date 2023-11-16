@@ -3,7 +3,7 @@
 
 ## Introduction
 
-kontak-ts is a npm package written in typescript which enables use of the Kontakt Lua API from node.
+kontak.ts is a npm package written in typescript which enables use of the Kontakt Lua API from node.
 
 The package is based on the [Kontakt Lua API](https://native-instruments.com/ni-tech-manuals/kontakt-api-reference-manual/en/welcome-to-the-kontakt-lua-api-reference-manual) 
 A bridging lua script is run within kontakt, which allows commands to be issued from a node environment. 
@@ -22,7 +22,7 @@ All of the exposed functions are async. Since the communication between kontakt 
 The constants are preloaded before execution and can be used sychronously as normal, as well as any other node apis.
 
 ```ts
-import { Kontakt } from "kontak-ts";
+import { Kontakt } from "kontak.ts";
 
 Kontakt.run(async (functions, constants) => {
   const instrumentIdx = await functions.addInstrument();
